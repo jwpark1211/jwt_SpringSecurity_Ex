@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TokenDto {
-
     private String  grantType; //허가를 받는 유형
     private String accessToken;
     private String refreshToken;

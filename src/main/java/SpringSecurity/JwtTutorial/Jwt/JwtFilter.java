@@ -14,10 +14,8 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
-
     private final TokenProvider tokenProvider;
 
     //Jwt의 Request Header에서 Access Token을 꺼내어 여러가지 검사 후(토큰 유효성 등)
@@ -26,6 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
+
         // 1. Request Header 에서 토큰을 꺼냄
         String jwt = resolveToken(request);
 

@@ -24,12 +24,10 @@ import java.util.stream.Collectors;
 @Slf4j
 //JWT 토큰의 암호화, 복호화, 검증 로직은 모두 TokenProvider를 통해 이루어진다.
 public class TokenProvider {
-
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //ACCESS TOKEN 유효 시간 = 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  //REFRESH TOKEN 유효 시간 = 7일
-
     private final Key key;
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -101,10 +99,8 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    /*
-     * 토큰 정보를 검증합니다.
-     * jwts 모듈이 알아서 Exception을 던집니다.
-     */
+    /* 토큰 정보를 검증합니다.
+     * jwts 모듈이 알아서 Exception을 던집니다.*/
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -120,7 +116,6 @@ public class TokenProvider {
         }
         return false;
     }
-
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
